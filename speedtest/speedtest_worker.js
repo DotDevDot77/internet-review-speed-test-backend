@@ -1,0 +1,1 @@
+// speedtest_worker.js placeholder
