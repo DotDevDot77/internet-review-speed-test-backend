@@ -8,8 +8,8 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.raw({ type: "*/*", limit: "200mb" }));
 
-// ✅ Serve static files from the speedtest folder
-app.use(express.static(path.join(__dirname, "speedtest")));
+// ✅ Serve static files from current directory
+app.use(express.static(__dirname));
 
 app.get("/garbage", (req, res) => {
   const size = parseInt(req.query.size || "1000000", 10);
@@ -25,9 +25,9 @@ app.get("/ping", (req, res) => {
   res.send("pong");
 });
 
-// ✅ Use correct absolute path for index.html
+// ✅ Load main HTML
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "speedtest/index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.listen(port, () => {
