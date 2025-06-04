@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LibreSpeed Proxy</title>
+  <script src="speedtest.js"></script>
+  <script src="speedtest_worker.js"></script>
+</head>
+<body style="margin:0;padding:0;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;color:#666;">
+  <div>Speed test listening for trigger...</div>
+  <script>
+    window.addEventListener("message", (event) => {
+      if (event.data.action === "startTest") {
+        const s = new Speedtest();
+        s.onupdate = function (data) {
+          const results = {
+            download: data.dlStatus,
+            upload: data.ulStatus,
+            ping: data.pingStatus,
+            jitter: data.jitterStatus
+          };
+          window.parent.postMessage(results, "*");
+        };
+        s.onend = function () {
+          console.log("Test complete.");
+        };
+        s.start();
+      }
+    });
+  </script>
+</body>
+</html>
