@@ -8,10 +8,9 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.raw({ type: "*/*", limit: "200mb" }));
 
-// Serve static files from the /speedtest folder
-app.use(express.static(path.join(__dirname, "speedtest")));
+// Serve static files from current root (Render root is already set to speedtest/)
+app.use(express.static(__dirname));
 
-// Speedtest backend endpoints
 app.get("/garbage", (req, res) => {
   const size = parseInt(req.query.size || "1000000", 10);
   res.set("Content-Type", "application/octet-stream");
@@ -26,9 +25,9 @@ app.get("/ping", (req, res) => {
   res.send("pong");
 });
 
-// Serve index.html from /speedtest for root route
+// Serve index.html from current root
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "speedtest", "index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.listen(port, () => {
