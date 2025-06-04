@@ -27,7 +27,8 @@ app.get("/ping", (req, res) => {
 
 // ✅ This MUST now point to /speedtest/index.html
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "speedtest", "index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
+
 });
 
 app.listen(port, () => {
